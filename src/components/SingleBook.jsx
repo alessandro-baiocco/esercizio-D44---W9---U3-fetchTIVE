@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { Card, Container } from "react-bootstrap";
+import FormComment from "./FormComment";
 
 class SingleBook extends Component {
   state = { selected: false, commenti: [] };
@@ -39,15 +40,15 @@ class SingleBook extends Component {
           <p>{this.props.idDelLibro}</p>
           {this.state.selected &&
             this.state.commenti.length >= 1 &&
-            this.state.commenti.map((com) => (
+            this.state.commenti.map((com, index) => (
               <>
-                {console.log(com)}
-                <p style={{ border: "solid black 1px" }}>
+                <p style={{ border: "solid black 1px" }} key={`comment-${index}`}>
                   {com.comment} | {com.rate} stelle / 5
                 </p>
               </>
             ))}
         </span>
+        <FormComment idDelLibro={this.props.idDelLibro} />
       </Card>
     );
   }

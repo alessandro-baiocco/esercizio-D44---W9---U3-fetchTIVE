@@ -6,19 +6,17 @@ class FormComment extends Component {
     rate: "1",
   };
 
-  handleChange = (propertyName, propertyValue) => {
+  handleChange = (propertyName, propertyValue, elementId, id) => {
     this.setState({ [propertyName]: propertyValue });
+    this.setState({ [elementId]: id });
   };
   invia = async (e) => {
     e.preventDefault();
+
     try {
-      const commento = {
-        comment: this.state.comment,
-        rate: this.state.rate,
-      };
-      const response = await fetch(`https://striveschool-api.herokuapp.com/api/comments/${this.props.idDelLibro}`, {
+      const response = await fetch(`https://striveschool-api.herokuapp.com/api/comments/`, {
         method: "POST",
-        body: JSON.stringify(commento),
+        body: JSON.stringify(this.state),
         headers: {
           "Content-Type": "application/json",
           Authorization:
@@ -43,7 +41,7 @@ class FormComment extends Component {
             type="text"
             value={this.state.comment}
             onChange={(event) => {
-              this.setState({ comment: this.event.value });
+              this.setState({ comment: event.target.value, elementId: this.props.idDelLibro });
             }}
           />
           <input
@@ -52,10 +50,12 @@ class FormComment extends Component {
             max={5}
             value={this.state.rate}
             onChange={(event) => {
-              this.setState({ rate: this.event.value });
+              this.setState({ rate: event.target.value });
             }}
           />
-          <button type="submit" onClick={(Event) => this.invia(Event)}></button>
+          <button type="submit" onClick={(Event) => this.invia(Event)}>
+            invia
+          </button>
         </form>
       </>
     );
