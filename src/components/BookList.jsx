@@ -1,6 +1,7 @@
 import { Component } from "react";
 import SingleBook from "./SingleBook";
 import { Container, ListGroup, Row, Card, Offcanvas } from "react-bootstrap";
+import FormComment from "./FormComment";
 
 class BookList extends Component {
   state = {
@@ -35,6 +36,7 @@ class BookList extends Component {
   render() {
     return (
       <Container>
+        {/* <FormComment idDelLibro={this.props.lista.asin} /> */}
         <input type="text" onChange={(Event) => this.filtra(Event.target.value)} />
         <Row className="lista">
           {this.props.lista
