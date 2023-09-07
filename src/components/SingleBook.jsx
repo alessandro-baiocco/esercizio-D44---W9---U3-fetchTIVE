@@ -2,8 +2,9 @@ import { Component } from "react";
 import { Card, Container } from "react-bootstrap";
 
 class SingleBook extends Component {
-  state = { selected: true, commenti: [] };
-  risposta = async () => {
+  state = { selected: false, commenti: [] };
+  risposta = async (event) => {
+    event.preventDefault();
     try {
       const response = await fetch(`https://striveschool-api.herokuapp.com/api/comments/${this.props.idDelLibro}`, {
         headers: {
@@ -19,17 +20,15 @@ class SingleBook extends Component {
       console.log(err);
     }
   };
-  componentDidMount = () => {
-    this.risposta();
-  };
 
   render() {
     return (
       <Card
         style={{ border: this.state.selected ? "2px solid blue" : "2px solid red" }}
         className="col-3"
-        onClick={() => {
+        onClick={(event) => {
           this.state.selected ? this.setState({ selected: false }) : this.setState({ selected: true });
+          this.risposta(event);
         }}
       >
         <img src={this.props.image} className="card-img-top" alt={this.props.title} />
@@ -38,7 +37,8 @@ class SingleBook extends Component {
         </div>
         <span>
           <p>{this.props.idDelLibro}</p>
-          {this.state.commenti.length >= 1 &&
+          {this.state.selected &&
+            this.state.commenti.length >= 1 &&
             this.state.commenti.map((com) => (
               <>
                 {console.log(com)}

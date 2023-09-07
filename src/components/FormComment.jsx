@@ -3,10 +3,14 @@ import { Component } from "react";
 class FormComment extends Component {
   state = {
     comment: "",
-    rate: "",
+    rate: "1",
   };
 
-  invia = async () => {
+  handleChange = (propertyName, propertyValue) => {
+    this.setState({ [propertyName]: propertyValue });
+  };
+  invia = async (e) => {
+    e.preventDefault();
     try {
       const commento = {
         comment: this.state.comment,
@@ -34,8 +38,25 @@ class FormComment extends Component {
   render() {
     return (
       <>
-        <input type="text" />
-        <input type="number" min={1} max={5} />
+        <form action="" onSubmit={() => this.setState()}>
+          <input
+            type="text"
+            value={this.state.comment}
+            onChange={(event) => {
+              this.setState({ comment: this.event.value });
+            }}
+          />
+          <input
+            type="number"
+            min={1}
+            max={5}
+            value={this.state.rate}
+            onChange={(event) => {
+              this.setState({ rate: this.event.value });
+            }}
+          />
+          <button type="submit" onClick={(Event) => this.invia(Event)}></button>
+        </form>
       </>
     );
   }
